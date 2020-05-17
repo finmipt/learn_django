@@ -6,9 +6,15 @@ def get_weather(city):
     # https://www.weatherbit.io/api/weather-current
     api_key = 'dc0c2cf4677442d3b043e48a95e0c799'
     response = requests.get(
-        'http://api.weatherstack.com/current',
+        'https://api.weatherbit.io/v2.0/current',
         params={
+            'city': city,
+            'key': api_key
         }
+
     )
 
-    return models.Weather(temperature=273.15)
+    data = response.json()
+    print(data)
+
+    return models.Weather(data['data'][0]['app_temp'] + 273.15, data['data'][0]['wind_spd'] )
